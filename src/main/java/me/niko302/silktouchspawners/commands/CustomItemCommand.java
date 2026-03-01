@@ -3,6 +3,7 @@ package me.niko302.silktouchspawners.commands;
 import lombok.RequiredArgsConstructor;
 import me.niko302.silktouchspawners.config.ConfigManager;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -20,6 +21,11 @@ public class CustomItemCommand implements TabExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (!sender.hasPermission("silktouchspawners.give")) {
+            sender.sendMessage(ChatColor.RED + "You do not have permission to use this command.");
+            return true;
+        }
+
         if (args.length != 2) {
             sender.sendMessage("Usage: /givecustomitem <player> <itemname>");
             return true;
@@ -46,6 +52,9 @@ public class CustomItemCommand implements TabExecutor {
 
     @Override
     public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] args) {
+        if (!commandSender.hasPermission("silktouchspawners.give")) {
+            return new ArrayList<>();
+        }
         if (args.length == 1) {
             return StringUtil.copyPartialMatches(args[0], Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toSet()), new ArrayList<>());
         }

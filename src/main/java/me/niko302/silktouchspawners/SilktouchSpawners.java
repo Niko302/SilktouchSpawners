@@ -32,6 +32,7 @@ public class SilktouchSpawners extends JavaPlugin implements Listener {
 
         // Register commands and tab completer
         getCommand("silktouchspawners").setExecutor(new SilktouchSpawnersCommand(this));
+        getCommand("givecustomitem").setPermission("silktouchspawners.give");
         getCommand("givecustomitem").setExecutor(new CustomItemCommand(configManager));
 
         new Metrics(this, 22326);
